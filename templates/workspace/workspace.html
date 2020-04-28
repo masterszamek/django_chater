@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/workspace/workspace.css" %}"/>
+
+{% endblock %}
+
+{% block header %}
+    <div class="header">
+        <h1> Witaj w {{ workspace.name }}</h1>
+
+    </div>
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <h2> Ten workspace jest pusty, utwórz jakieś pokoje</h2>
+    </div>
+
+{% endblock %}

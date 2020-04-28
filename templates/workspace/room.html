@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/workspace/room.css" %}"/>
+{% endblock %}
+
+
+{% block header %}
+    <div class="header" style="text-align: center">
+        <h1> {{ workspace.name }} -> {{ current_room.name }}</h1>
+    </div>
+
+{% endblock %}
+
+{% block main %}
+    <div class="main grid-system">
+        <div class="rooms">
+            <h3> Rooms </h3>
+            {% for room in rooms_in_workspace %}
+                <p>{{ room.name }} </p>
+
+            {% endfor %}
+        </div>
+
+        <div class="chatbox">
+            {% for message in messages %}
+                {% if message.author == user %}
+                    <div class="chatbox__messages__user-message--ind-message" style="float:left">
+                        <p class="name"> {{ message.author.username }}</p>
+
+                        <p class="message">{{ message.text }}</p>
+                    </div>
+
+                {% else %}
+                    <div class="chatbox__messages__user-message--ind-message" style="float:right">
+                        <p class="name"> {{ message.author.username }}</p>
+
+                        <p class="message">{{ message.text }}</p>
+                    </div>
+                {% endif %}
+
+
+            {% endfor %}
+        </div>
+
+        <div class="message-area">
+            <!-- <input type="text"  id="type-area" placeholder="Type Message"> -->
+            <textarea id="message-area" placeholder="Type Message" > </textarea>
+            <!-- <button id="send_msg_button" type="button" > Send </button> -->
+            <div id="cokolwiek" ><p> Send</p></div>
+        </div>
+
+        <div class="chatbox__user-list">
+            <h3> Users </h3>
+            {% for u in users %}
+                <div class="chatbox___user-list-box">
+                    <div id = "{{ u.username }}" class="chatbox__user-list-status chatbox__user--offline"></div>
+                    <div class="chatbox___user_-list-name"><p> {{ u.username }}</p></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="{% static "workspace/room.js" %}"></script>
+
+{% endblock %}

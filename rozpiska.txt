@@ -1,0 +1,3 @@
+Applications:
+    root -> wszystkie bazowe rzeczy
+    workspace -> wszystko co zawiera 1 podchatter

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/root/index.css" %}"/>
+    <script> let user = {{user.username}};</script>
+{% endblock %}
+
+{% block header %}
+
+    <div class="header">
+        {% if user.is_authenticated %}
+            <p><a href="{% url "root:logout" %}">Wyloguj</a></p>
+            <p><a href=".">Przejdz do ustawien</a></p>
+        {% else %}
+            <p><a href="{% url "root:login" %}">Zaloguj</a></p>
+            <p><a href=".">Rejestracja</a></p>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="main grid-system">
+        <div class="left" style="background-color:aqua;">
+            <h1> Public workspaces </h1>
+            {% for workspace in public_workspaces %}
+                <a href="{% url "workspace:workspace" workspace.slug %}"><p>{{ workspace.name }}</p></a>
+            {% endfor %}
+        </div>
+        <div class="right" style="background-color: aliceblue;">
+            {% if user.is_authenticated %}
+                <h1> Te do których należysz </h1>
+                {% for workspace in allowed_workspaces %}
+                    <a href="{% url "workspace:workspace" workspace.slug %}"><p>{{ workspace.name }}</p></a>
+                {% endfor %}
+            {% else %}
+                <h1> Nie wiem co jeszcze tutaj dać</h1>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
