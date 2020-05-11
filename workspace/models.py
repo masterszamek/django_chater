@@ -42,11 +42,16 @@ def complex_user_acces_room(user, workspace_slug, room_slug):
 
 
 class Workspace(models.Model):
+    """
+        If public field is FALSE user has access workspace only by invite workspace admin.
+        Otherwise user has also access by password
+    """
     name = models.CharField(max_length=30, unique=True, verbose_name="name")
     slug = models.SlugField(verbose_name="slug", blank=True)
     users = models.ManyToManyField(User, blank=True, verbose_name="users")
     public = models.BooleanField(default=False, verbose_name="public")
     password = models.CharField(blank=True, max_length=50, verbose_name="password")
+    hidden = models.BooleanField(default=True, verbose_name="hidden")
 
     def get_absolute_url(self):
         return reverse("workspace:workspace", args=[self.slug])
@@ -75,25 +80,27 @@ class Workspace(models.Model):
 
 
 class Room(models.Model):
+    """
+            If public field is FALSE user has access room only by invite workspace admin.
+            Otherwise user has also access by password
+    """
     name = models.CharField(max_length=30, verbose_name="name")
     users = models.ManyToManyField(User, blank=True, verbose_name="users")
     workspace = models.ForeignKey(Workspace, blank=True, on_delete=models.CASCADE, verbose_name="workspace")
     slug = models.SlugField(verbose_name="slug", blank=True)
     public = models.BooleanField(default=False, verbose_name="public")
     password = models.CharField(blank=True, max_length=50, verbose_name="password")
+    hidden = models.BooleanField(default=True, verbose_name="hidden")
 
     def get_absolute_url(self):
         return reverse("workspace:room", args=[self.workspace.slug, self.slug])
 
-    @classmethod
-    def last_n_messages(cls, workspace_name, room_name, n=50):
-        """ Fetch last n messages based on workspace name and  room name"""
-        w = Workspace.objects.get(name=workspace_name).room_set.get(name=room_name).message_set.all()
-
-        if w.__len__() < n:
-            return w
+    def last_n_messages(self, n=20):
+        messages = self.message_set.all()
+        if messages.__len__() < n:
+            return messages
         else:
-            return w[w.__len__() - n:]
+            return messages[messages.__len__() - n:]
 
     def user_has_acces_room(self, user):
         if (self.public == True and self.password == "") or self.users.filter(username=user.username):

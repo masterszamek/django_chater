@@ -14,7 +14,7 @@ p {
 
 .grid-system {
     display: grid;
-    grid-template-columns: 15% auto 10%;
+    grid-template-columns: 15% 75% 10%;
     grid-template-rows: 90% 10%;
     grid-template-areas: "rooms chatbox users" "rooms message-area users";
 }
@@ -24,13 +24,17 @@ p {
     border-top-right-radius: 0.2em;
     border-bottom-right-radius: 0.2em;
     grid-area: rooms;
+
+}
+.rooms p{
+    padding-left: 1em;
 }
 
 .rooms h3 {
     background: rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.9);
     padding: 1em;
-    margin: 0;
+    margin-bottom: 1em;
     font-weight: 300;
     text-align: center;
 }
@@ -40,6 +44,8 @@ p {
     border-radius: 0.2em;
     box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
     grid-area: chatbox;
+    overflow: auto;
+    max-height: 100%;
 }
 
 .chatbox__messages__user-message--ind-message {

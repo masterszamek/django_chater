@@ -1,11 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block head %}
+    <style>
+    .errorlist{ color:lightcoral;}
+    </style>
+{% endblock %}
+{% block header %}
+    <div class="header">
+        <p> Sign up site</p>
+    </div>
+
+{% endblock %}
 
 
-</body>
-</html>
+{% block main %}
+    <div class="main">
+
+        <form action={% url "root:sign_up" %} method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

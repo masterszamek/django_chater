@@ -2,13 +2,14 @@ body {
     background-image: -webkit-linear-gradient(330deg, #000, #f0a6ca);
     background: linear-gradient(120deg, #000, #985b71);
     display: grid;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     grid-template-columns: 100%;
-    grid-template-rows: 10% auto;
+    grid-template-rows: 10% 90%;
     grid-template-areas:
             "header"
             "main";
+    color: white;
 }
 
 .header {

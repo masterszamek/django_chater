@@ -8,7 +8,8 @@
 
 {% block header %}
     <div class="header" style="text-align: center">
-        <h1> {{ workspace.name }} -> {{ current_room.name }}</h1>
+        <h2> {{ workspace.name }} </h2>
+        <h3>{{ current_room.name }}</h3>
     </div>
 
 {% endblock %}
@@ -18,7 +19,18 @@
         <div class="rooms">
             <h3> Rooms </h3>
             {% for room in rooms_in_workspace %}
-                <p>{{ room.name }} </p>
+                {% if room.password %}
+                    <a href="{% url "workspace:room" workspace.slug room.slug %}">
+                        <p>
+                            {{ room.name }}
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </p>
+                    </a>
+
+                {% else %}
+                    <a href="{% url "workspace:room" workspace.slug room.slug %}"><p>{{ room.name }}</p></a>
+
+                {% endif %}
 
             {% endfor %}
         </div>
@@ -45,17 +57,16 @@
         </div>
 
         <div class="message-area">
-            <!-- <input type="text"  id="type-area" placeholder="Type Message"> -->
-            <textarea id="message-area" placeholder="Type Message" > </textarea>
-            <!-- <button id="send_msg_button" type="button" > Send </button> -->
-            <div id="cokolwiek" ><p> Send</p></div>
+            <textarea id="message-area" placeholder="Type Message"> </textarea>
+            <button id="send_msg_button" type="button"> Send</button>
+
         </div>
 
         <div class="chatbox__user-list">
             <h3> Users </h3>
             {% for u in users %}
                 <div class="chatbox___user-list-box">
-                    <div id = "{{ u.username }}" class="chatbox__user-list-status chatbox__user--offline"></div>
+                    <div id="{{ u.username }}" class="chatbox__user-list-status chatbox__user--offline"></div>
                     <div class="chatbox___user_-list-name"><p> {{ u.username }}</p></div>
                 </div>
             {% endfor %}
