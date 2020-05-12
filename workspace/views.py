@@ -58,4 +58,3 @@ class Workspace(LoginRequiredMixin, View):
         else:
             raise PermissionDenied
 
-#@TODO url dla roomow
