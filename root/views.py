@@ -72,14 +72,20 @@ class Index(View):
         }
         return context
 
+        
+class Ideas(View):
+    template_name = "root/ideas.html"
+
+    def get(self, request):
+        return render(request, template_name=self.template_name)
+
+
 class Login(LoginView):
     template_name = "root/login.html"
-    pass
 
 
 class Logout(LogoutView):
     template_name = "root/logout.html"
-    pass
 
 
 class SignUp(View):

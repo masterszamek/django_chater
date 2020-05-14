@@ -129,10 +129,10 @@ class Room(models.Model):
 
 class Message(models.Model):
     text = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), verbose_name="author")
+    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user), verbose_name="author")
     room = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name="room")
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, verbose_name="workspace")
     send_date = models.DateTimeField(auto_now_add=True, verbose_name="send_date")
-
+     
     class Meta:
         ordering = ['send_date']

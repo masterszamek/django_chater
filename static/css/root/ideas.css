@@ -1,0 +1,48 @@
+
+a{
+    color: lightgray;
+    text-align: center;
+}
+
+.containerr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.priority_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin:0px;
+    padding:0px;
+    
+    width: 24%;
+    background: rgba(255, 255, 255, 0.10);
+    height: 100%;
+}
+
+.priority_container > h3{
+    background: rgba(255, 255, 255, 0.15);
+    color: #99EE99;
+    padding: 1em;
+    font-weight: 300;
+    text-align: center;
+}
+
+
+.idea{
+    background: rgba(255, 255, 255, 0.12);
+    min-height: 5%;
+    max-height: 30%;
+    margin: 0.6em 0em;
+}
+.idea p{
+    padding: 0.5em 1em 1em 1em;
+}
+.idea h5{
+    padding: 0.5em;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+}

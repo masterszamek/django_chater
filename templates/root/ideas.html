@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head%}
+    <link rel="stylesheet" type="text/css" href="{% static "css/root/ideas.css"%}"/>
+{% endblock%}
+
+{% block header%}
+    <div class="header">
+        <button type="button" class="btn btn-outline-secondary">
+            <a href="{% url "root:index" %}">Go to index page</a>
+        </button>
+    </div>
+
+{% endblock %}
+
+{% block main %}
+    <div class="main containerr">
+        <div class="priority_container">
+            <h3>Whats New</h3>
+            <div class="idea">
+                <h5> Jakieś gowno</h5>
+                <p> jaskajdkajdkajkdsjakdjakdjasjd kajdka</br> ssdakjskajkdjakdjkasjdka </br> qweqeqwe</p>
+            </div>
+            <div class="idea">
+                <h5> Jakieś gownoakieś gownoakieś gownoakieś gownoakieś gowno</h5>
+                <p> jaskajdkajdkajkdsjakdjakdjasjd kajdka</br> ssdakjskajkdjakdjkasjdka </br> qweqeqwe</p>
+            </div>
+        </div>
+
+        <div class="priority_container">
+            <h3> Hight Priority tasks </h3>
+            <div class="idea">
+                <h5> Jakieś gowno</h5>
+                <p> jaskajdkajdkajkdsjakdjakdjasjd kajdka</br> ssdakjskajkdjakdjkasjdka </br> qweqeqwe</p>
+            </div>
+        </div>
+
+        <div class="priority_container">
+            <h3> Medium Priority tasks </h3>
+            
+                <div class="idea">
+                    <h5> Jakieś gowno</h5>
+                    <p> jaskajdkajdkajkdsjakdjakdjasjd kajdka</br> ssdakjskajkdjakdjkasjdka </br> qweqeqwe</p>
+                </div>
+                <div class="idea">
+                    <h5> Jakieś gowno</h5>
+                    <p> jaskajdkajdkajkdsjakdjakdjasjd kajdka</br> ssdakjskajkdjakdjkasjdka </br> qweqeqwe</p>
+                </div>
+            
+            
+        </div>
+
+        <div class="priority_container">
+            <h3>  Low Priority tasks </h3>
+        </div>
+
+
+    </div>
+{% endblock%}

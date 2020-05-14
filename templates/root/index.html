@@ -9,14 +9,12 @@
 
     <div class="header">
         {% if user.is_authenticated %}
-            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:logout" %}">Logout</a>
-            </button>
+            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:logout" %}">Logout</a></button>
             <button type="button" class="btn btn-outline-secondary"><a href=".">Settings</a></button>
+            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:ideas"%}"> Ideas <a></button>
         {% else %}
-            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:login" %}">Sign In</a>
-            </button>
-            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:sign_up" %}">sign up</a>
-            </button>
+            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:login" %}">Sign In</a></button>
+            <button type="button" class="btn btn-outline-secondary"><a href="{% url "root:sign_up" %}">sign up</a></button>
         {% endif %}
     </div>
 
