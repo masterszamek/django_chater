@@ -7,7 +7,7 @@ def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
 
 
-class IdeasContainer(models.Model):
+class Priority(models.Model):
     class PriorityChoice(models.IntegerChoices):
         HIGH = 1, _("High task priority")
         MEDIUM = 2, _("Medium task priority")
@@ -24,6 +24,10 @@ class IdeasContainer(models.Model):
     def color(self):
         return self.Color[self.PriorityChoice(self.priority).name].value
     
+    @property
+    def title(self):
+        return self.__str__()
+        
     def __str__(self):
         return str(self.PriorityChoice(self.priority).label)
 
@@ -33,4 +37,7 @@ class Idea(models.Model):
     author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user), verbose_name="author")
     title = models.CharField(max_length=150, blank=False, verbose_name="title")
     text = models.TextField(verbose_name="text")
-    ideas_container = models.ForeignKey(IdeasContainer, on_delete=models.CASCADE, verbose_name="ideas_container")
+    priority = models.ForeignKey(Priority, on_delete=models.CASCADE, verbose_name="priority")
+
+    def __str__(self):
+        return "{} -> {}".format(self.title, self.text)
