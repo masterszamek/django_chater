@@ -3,10 +3,13 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views import View
 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 
 from workspace.forms import HiddenWorkspaceForm
 from workspace.models import Workspace
+
+from .models import Priority, WhatsNew
 
 
 from django.utils.translation import ugettext_lazy as _
@@ -31,6 +34,7 @@ class Index(View):
         )
 
     def post(self, request):
+        print(request.POST["cosioss"])
         context = self.initial_data(request)
         form = HiddenWorkspaceForm(request.POST)
 
@@ -73,11 +77,22 @@ class Index(View):
         return context
 
         
-class Ideas(View):
+class Ideas(LoginRequiredMixin, View):
     template_name = "root/ideas.html"
 
     def get(self, request):
-        return render(request, template_name=self.template_name)
+        priorities = Priority.objects.all()
+        whats_new_p = WhatsNew.objects.all()
+
+        context = {
+            "priorities": priorities,
+            "whats_new_p": whats_new_p,
+        }
+        return render(
+            request, 
+            template_name=self.template_name, 
+            context=context
+        )
 
 
 class Login(LoginView):

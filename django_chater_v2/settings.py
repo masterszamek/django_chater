@@ -143,5 +143,6 @@ STATICFILES_DIRS = [
     ("workspace", os.path.join(BASE_DIR, "static/workspace")),
     ("root", os.path.join(BASE_DIR, "static/root")),
     ("css", os.path.join(BASE_DIR, "static/css")),
+    ("modals", os.path.join(BASE_DIR, "static/modals")),
 
 ]

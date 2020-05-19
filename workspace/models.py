@@ -46,12 +46,12 @@ class Workspace(models.Model):
         If public field is FALSE user has access workspace only by invite workspace admin.
         Otherwise user has also access by password
     """
-    name = models.CharField(max_length=30, unique=True, verbose_name="name")
-    slug = models.SlugField(verbose_name="slug", blank=True)
-    users = models.ManyToManyField(User, blank=True, verbose_name="users")
-    public = models.BooleanField(default=False, verbose_name="public")
-    password = models.CharField(blank=True, max_length=50, verbose_name="password")
-    hidden = models.BooleanField(default=True, verbose_name="hidden")
+    name = models.CharField(max_length=30, unique=True)
+    slug = models.SlugField(blank=True)
+    users = models.ManyToManyField(User, blank=True)
+    public = models.BooleanField(default=False)
+    password = models.CharField(blank=True, max_length=50)
+    hidden = models.BooleanField(default=True)
 
     def get_absolute_url(self):
         return reverse("workspace:workspace", args=[self.slug])
@@ -84,13 +84,13 @@ class Room(models.Model):
             If public field is FALSE user has access room only by invite workspace admin.
             Otherwise user has also access by password
     """
-    name = models.CharField(max_length=30, verbose_name="name")
-    users = models.ManyToManyField(User, blank=True, verbose_name="users")
-    workspace = models.ForeignKey(Workspace, blank=True, on_delete=models.CASCADE, verbose_name="workspace")
-    slug = models.SlugField(verbose_name="slug", blank=True)
-    public = models.BooleanField(default=False, verbose_name="public")
-    password = models.CharField(blank=True, max_length=50, verbose_name="password")
-    hidden = models.BooleanField(default=True, verbose_name="hidden")
+    name = models.CharField(max_length=30)
+    users = models.ManyToManyField(User, blank=True)
+    workspace = models.ForeignKey(Workspace, blank=True, on_delete=models.CASCADE)
+    slug = models.SlugField(blank=True)
+    public = models.BooleanField(default=False)
+    password = models.CharField(blank=True, max_length=50)
+    hidden = models.BooleanField(default=True)
 
     def get_absolute_url(self):
         return reverse("workspace:room", args=[self.workspace.slug, self.slug])
@@ -129,10 +129,10 @@ class Room(models.Model):
 
 class Message(models.Model):
     text = models.TextField()
-    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user), verbose_name="author")
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name="room")
-    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, verbose_name="workspace")
-    send_date = models.DateTimeField(auto_now_add=True, verbose_name="send_date")
+    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+    send_date = models.DateTimeField(auto_now_add=True)
      
     class Meta:
         ordering = ['send_date']

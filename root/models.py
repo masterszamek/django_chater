@@ -18,7 +18,7 @@ class Priority(models.Model):
         MEDIUM = "#99EE99", _("light green")
         LOW = "#20B2D0", _("light blue")
 
-    priority = models.IntegerField(choices=PriorityChoice.choices, default=3, unique=True, blank=False, verbose_name="priority")
+    priority = models.IntegerField(choices=PriorityChoice.choices, default=3, unique=True, blank=False)
     
     @property
     def color(self):
@@ -34,10 +34,29 @@ class Priority(models.Model):
 class Idea(models.Model):
 
 
-    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user), verbose_name="author")
-    title = models.CharField(max_length=150, blank=False, verbose_name="title")
-    text = models.TextField(verbose_name="text")
-    priority = models.ForeignKey(Priority, on_delete=models.CASCADE, verbose_name="priority")
+    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
+    title = models.CharField(max_length=50, blank=False)
+    text = models.TextField()
+    priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
+    send_date = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return "{} -> {}".format(self.title, self.text)
+
+    class Meta:
+        ordering = ['send_date']
+
+
+class WhatsNew(models.Model):
+    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
+    title = models.CharField(max_length=50, blank=False)
+    text = models.TextField()
+    send_date = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return "{} -> {}".format(self.title, self.text)
+
+    class Meta:
+        ordering = ['send_date']

@@ -14,29 +14,38 @@
 {% endblock %}
 
 {% block main %}
+
+
     <div class="main main_container">
         <div class="priority_container">
-            <h3 class="priority_container__title"> Whats New </h3>
+            <h3 class="priority_container__title"> What's New </h3>
             <div class="ideas">
-                <div class="idea">
-                    <h5> Jakies gowno </h5>
-                    <p> Twrweoriwoeriwoerioweriweirowoerwieor </p>
-                    <h6> maciek </h6>
-                </div>
-                <div class="idea">
-                    <h5>Jakies gowno </h5>
-                    <p> Twrweoriwoeriwoerioweriweirowoerwieor </p>
-                    <h6> maciek </h6>
-                </div>
-                <div class="idea">
-                    <h5> Jakies gowno </h5>
-                    <p> Twrweoriwoeriwoerioweriweirowoerwieor normalnie slowa cos tam cer  </p>
-                </div>
-                
+                {% for whats_new in whats_new_p%}
+                    <div class="idea">
+                        <h5> {{whats_new.title}} </h5>
+                        <p> {{whats_new.text}} </p>
+                        <h6> {{whats_new.author}} </h6>
+                    </div>
+                {% endfor %}            
             </div>
-            <button class="btn btn-secondary priority_container__form-button"><h5> mweirwrwenrwer</h5> </button> 
+
         </div>
-
-
+        {% for priority in priorities%}
+            <div class="priority_container">
+                <h3 class="priority_container__title" style="color:{{priority.color}}">{{priority.title}}</h3> 
+                <div class="ideas">
+                    {% for idea in priority.idea_set.all %}
+                        <div class="idea">
+                            <h5> {{idea.title}} </h5>
+                            <p> {{idea.text}} </p>
+                            <h6> {{idea.author}} </h6>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="btn btn-secondary priority_container__form-button"><h5>Add task</h5> </button> 
+            </div>
+        {% endfor %}
     </div>
+
+    
 {% endblock%}
