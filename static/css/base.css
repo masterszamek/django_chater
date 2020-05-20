@@ -24,3 +24,9 @@ h3, h5{
     align-items: center;
     justify-content: center;
 }
+
+.errorlist{ color:lightcoral;}
+
+.modal-content_background{
+    background: rgba(255, 255, 255, 0.20);
+}

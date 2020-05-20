@@ -36,8 +36,8 @@ class Idea(models.Model):
 
     author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
     title = models.CharField(max_length=50, blank=False)
-    text = models.TextField()
-    priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
+    text = models.TextField(blank=False)
+    priority = models.ForeignKey(Priority, on_delete=models.CASCADE, blank=False)
     send_date = models.DateTimeField(auto_now_add=True)
 
 

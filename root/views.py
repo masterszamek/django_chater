@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.views import LoginView, LogoutView
 from django.views import View
+from django.urls import reverse
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import authenticate, login
 
 from workspace.forms import HiddenWorkspaceForm
 from workspace.models import Workspace
 
-from .models import Priority, WhatsNew
-
+from .models import Priority, WhatsNew, Idea
+from .forms import IdeaForm
 
 from django.utils.translation import ugettext_lazy as _
 from django.forms import ValidationError
@@ -22,6 +23,8 @@ class Index(View):
     template_name = "root/index.html"
 
     def get(self, request):
+        print(id(request))
+        print(id(self))
         context = self.initial_data(request)
 
         form = HiddenWorkspaceForm()
@@ -34,7 +37,8 @@ class Index(View):
         )
 
     def post(self, request):
-        print(request.POST["cosioss"])
+
+        print(request.POST)
         context = self.initial_data(request)
         form = HiddenWorkspaceForm(request.POST)
 
@@ -77,23 +81,45 @@ class Index(View):
         return context
 
         
-class Ideas(LoginRequiredMixin, View):
+
+
+def ideas(request):
     template_name = "root/ideas.html"
+    modal_form_url = reverse("root:ideas")
+    priorities = Priority.objects.all()
+    whats_new_p = WhatsNew.objects.all()
+    modal_form = IdeaForm()
+    modal_form_error_id = False
 
-    def get(self, request):
-        priorities = Priority.objects.all()
-        whats_new_p = WhatsNew.objects.all()
 
-        context = {
-            "priorities": priorities,
-            "whats_new_p": whats_new_p,
-        }
-        return render(
-            request, 
-            template_name=self.template_name, 
-            context=context
-        )
+    if request.POST:
+        modal_form = IdeaForm(request.POST)
+        priority = Priority.objects.get(priority=request.POST['modal_form_id'][-1])
+        user = request.user
+        print(modal_form, priority, user, sep="\n")
+        if modal_form.is_valid():
+            idea = Idea(author=user, priority=priority, title=modal_form.cleaned_data.get("title"), text=modal_form.cleaned_data.get("text"))
+            idea.save()
+            redirect("root:ideas")
+        else:
+            modal_form.add_error(None, "something went wrong")
+            modal_form_error_id = request.POST['modal_form_id']
 
+
+
+    context = {
+        "priorities": priorities,
+        "whats_new_p": whats_new_p,
+        "modal_form_url": modal_form_url,
+        "modal_form":modal_form,
+        "modal_form_error_id": modal_form_error_id
+    }
+
+    return render(
+        request, 
+        template_name=template_name, 
+        context=context
+    )
 
 class Login(LoginView):
     template_name = "root/login.html"

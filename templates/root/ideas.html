@@ -24,7 +24,7 @@
                     <div class="idea">
                         <h5> {{whats_new.title}} </h5>
                         <p> {{whats_new.text}} </p>
-                        <h6> {{whats_new.author}} </h6>
+                        <h6> {{whats_new.author}} {{whats_new.send_date.date}} </h6>
                     </div>
                 {% endfor %}            
             </div>
@@ -38,13 +38,26 @@
                         <div class="idea">
                             <h5> {{idea.title}} </h5>
                             <p> {{idea.text}} </p>
-                            <h6> {{idea.author}} </h6>
+                            <h6> {{idea.author}} {{idea.send_date.date}} </h6>
                         </div>
                     {% endfor %}
                 </div>
-                <button class="btn btn-secondary priority_container__form-button"><h5>Add task</h5> </button> 
+
+                <button data-toggle="modal" type="button" class="btn btn-secondary priority_container__form-button" 
+                            data-target="#modal_id_{{priority.priority}}" >
+                    <h5>Add task</h5> 
+                </button>
+                {% include "modals/form_modal.html" with modal_id=priority.priority modal_title=priority.title modal_form_sufix_id=priority.priority modal_redirect_title="Add" %}
+
             </div>
         {% endfor %}
+
+        {% if modal_form_error_id %}
+                    <script type="text/javascript">
+                        $("#{{modal_form_error_id}}").modal('show');
+                    </script>
+
+        {% endif %}
     </div>
 
     

@@ -65,7 +65,7 @@
     <div class="modal fade" id="join_to_workspace_by_password" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content_look">
+            <div class="modal-content modal-content_background">
 
 
                 <div class="modal-header">
@@ -77,19 +77,7 @@
                 <div class="modal-body">
                     <form action="{% url "root:index" %}" method="post" id="my_form">
                         {% csrf_token %}
-                        <div id="form_errors">{{ form.non_field_errors }}</div>
-                        <p id="workspace_name">
-                            <label for="{{ form.name.id_for_label }}">Name: </label>
-                            {{ form.name }}
-                            {{ form.name.errors }}
-                        </p>
-                        <p id="workspace_password">
-
-                            <label for="{{ form.password.id_for_label }}">Password: </label>
-                            {{ form.password }}
-                            {{ form.password.errors }}
-                        </p>
-                        <input type="hidden" value="erer" name="cosioss">
+                         {{form.as_p}}
                     </form>
                 </div>
 
