@@ -7,16 +7,21 @@
 
 
 {% block header %}
-    <button  type="button" class="btn btn-secondary"><a href="{% url "root:index" %}"> Go to index page</a></button>
-    <div class="header" style="text-align: center">
-        <h2> {{ workspace.name }} </h2>
-        <h3>{{ current_room.name }}</h3>
+  
+    <div class="header header-grid-system">
+        <div style="grid-area: buttons;">
+            <button  type="button" class="btn btn-outline-secondary"><a href="{% url "root:index" %}">Go to index page</a></button>
+        </div>
+        <div class="grid-area: titles;">
+            <h2> {{ workspace.name }} </h2>
+            <h3>{{ current_room.name }}</h3>
+        </div>
     </div>
 
 {% endblock %}
 
 {% block main %}
-    <div class="main grid-system">
+    <div class="main main-grid-system">
         <div class="rooms">
             <h3> Rooms </h3>
             <h5> Public rooms </h5>

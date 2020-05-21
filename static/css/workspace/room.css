@@ -11,8 +11,12 @@ h1 {
 p {
     color: #FFF;
 }
-
-.grid-system {
+.header-grid-system{
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-areas: "buttons titles"
+}
+.main-grid-system {
     display: grid;
     grid-template-columns: 15% 75% 10%;
     grid-template-rows: 90% 10%;
