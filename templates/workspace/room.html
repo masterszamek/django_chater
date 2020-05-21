@@ -7,6 +7,7 @@
 
 
 {% block header %}
+    <button  type="button" class="btn btn-secondary"><a href="{% url "root:index" %}"> Go to index page</a></button>
     <div class="header" style="text-align: center">
         <h2> {{ workspace.name }} </h2>
         <h3>{{ current_room.name }}</h3>
@@ -18,6 +19,8 @@
     <div class="main grid-system">
         <div class="rooms">
             <h3> Rooms </h3>
+            <h5> Public rooms </h5>
+
             {% for room in rooms_in_workspace %}
                 {% if room.password %}
                     <a href="{% url "workspace:room" workspace.slug room.slug %}">
@@ -33,6 +36,33 @@
                 {% endif %}
 
             {% endfor %}
+            <h5> Allowed rooms </h5>
+
+            {% for room in user_rooms %}
+                {% if room.password %}
+                    <a href="{% url "workspace:room" workspace.slug room.slug %}">
+                        <p>
+                            {{ room.name }}
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </p>
+                    </a>
+
+                {% else %}
+                    <a href="{% url "workspace:room" workspace.slug room.slug %}"><p>{{ room.name }}</p></a>
+
+                {% endif %}
+            {% endfor %}
+            <button id="hidden_room" type="button" class="btn btn-secondary" data-toggle="modal"
+                        data-target="#modal_id_">
+                Join to hidden room
+            </button>
+            {% include "modals/form_modal.html" with modal_id="" modal_title="Join to hidden room" modal_form_id="form_id" modal_form=form modal_form_url=url modal_redirect_title="Join to hidden room" %}
+            {% if form.errors %}
+                <script type="text/javascript">
+                    $("#modal_id_").modal('show');
+                </script>
+
+            {% endif %}
         </div>
 
         <div class="chatbox">

@@ -128,11 +128,15 @@ class Room(models.Model):
 
 
 class Message(models.Model):
-    text = models.TextField()
+    text = models.TextField(blank=False)
     author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     send_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.text.isspace():
+            super(Message, self).save(*args, **kwargs)
      
     class Meta:
         ordering = ['send_date']

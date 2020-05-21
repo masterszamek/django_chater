@@ -3,9 +3,10 @@ from django.views import View
 from django.urls import reverse
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 from workspace.forms import HiddenWorkspaceForm
 from workspace.models import Workspace
@@ -23,8 +24,7 @@ class Index(View):
     template_name = "root/index.html"
 
     def get(self, request):
-        print(id(request))
-        print(id(self))
+
         context = self.initial_data(request)
 
         form = HiddenWorkspaceForm()
@@ -77,12 +77,13 @@ class Index(View):
         context = {
                 "public_workspaces": public_workspaces,
                 "allowed_workspaces": allowed_workspaces,
+                "url": reverse("root:index")
         }
         return context
 
         
 
-
+@login_required
 def ideas(request):
     template_name = "root/ideas.html"
     modal_form_url = reverse("root:ideas")
@@ -90,7 +91,7 @@ def ideas(request):
     whats_new_p = WhatsNew.objects.all()
     modal_form = IdeaForm()
     modal_form_error_id = False
-
+    print(request.method)
 
     if request.POST:
         modal_form = IdeaForm(request.POST)
@@ -100,7 +101,7 @@ def ideas(request):
         if modal_form.is_valid():
             idea = Idea(author=user, priority=priority, title=modal_form.cleaned_data.get("title"), text=modal_form.cleaned_data.get("text"))
             idea.save()
-            redirect("root:ideas")
+            modal_form = IdeaForm()
         else:
             modal_form.add_error(None, "something went wrong")
             modal_form_error_id = request.POST['modal_form_id']

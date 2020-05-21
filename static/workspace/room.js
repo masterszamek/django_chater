@@ -2,7 +2,7 @@ let loc = window.location;
 let ws = new WebSocket("ws://" + loc.host + loc.pathname);
 
 let data = new Object(); // general data
-
+$(".chatbox").animate({ scrollTop: $('.chatbox').prop("scrollHeight")}, 0);
 
 data.workspace_slug = loc.pathname.split('/')[2];
 data.room_slug = loc.pathname.split("/")[3];
@@ -68,14 +68,15 @@ function send_msg(text) {
     msg.args = [text];
     msg.command = "new_message";
     ws.send(to_JSON(msg));
-    document.getElementById("message-area").value = "";
+    $("#message-area").val("");
 }
 
 
 $("#send_msg_button").click(function () {
     console.log("kliklem button");
     let text = $("#message-area").val();
-    send_msg(text);
+    if (/\S/.test(text))
+        send_msg(text);
 });
 
 $("#message-area").keypress(function (event) {
@@ -84,18 +85,10 @@ $("#message-area").keypress(function (event) {
         event.preventDefault();
         console.log("kliklem enter");
         let text = $("#message-area").val();
-        send_msg(text);
+        if (/\S/.test(text))
+            send_msg(text);
 
     }
 });
 
-/*
-    {
-        command: "asdadad"
-        args: [ ]
-    }
-
- */
-
-//@TODO animacja chatu
 

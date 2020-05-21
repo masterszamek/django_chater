@@ -45,7 +45,7 @@ class Idea(models.Model):
         return "{} -> {}".format(self.title, self.text)
 
     class Meta:
-        ordering = ['send_date']
+        ordering = ['-send_date']
 
 
 class WhatsNew(models.Model):
@@ -59,4 +59,4 @@ class WhatsNew(models.Model):
         return "{} -> {}".format(self.title, self.text)
 
     class Meta:
-        ordering = ['send_date']
+        ordering = ['-send_date']

@@ -6,4 +6,6 @@ class HiddenWorkspaceForm(forms.Form):
     name = forms.CharField(label="Workspace name", max_length=30, required=True)
     password = forms.CharField(label="Workspace password", max_length=50, required=False, widget=PasswordInput)
 
-
+class HiddenRoomForm(forms.Form):
+    name = forms.CharField(label="Room name", max_length=30, required=True)
+    password = forms.CharField(label="Room password", max_length=50, required=False, widget=PasswordInput)
