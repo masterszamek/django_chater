@@ -3,17 +3,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
+from .models_field_type import IntegerChoices, TextChoices
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
 
 
 class Priority(models.Model):
-    class PriorityChoice(models.IntegerChoices):
+    class PriorityChoice(IntegerChoices):
         HIGH = 1, _("High task priority")
         MEDIUM = 2, _("Medium task priority")
         LOW = 3, _("Low task priority")
     
-    class Color(models.TextChoices):
+    class Color(TextChoices):
         HIGH = "#FFB6C1", _("light pink")
         MEDIUM = "#99EE99", _("light green")
         LOW = "#20B2D0", _("light blue")
