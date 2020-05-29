@@ -31,6 +31,9 @@ class Priority(models.Model):
         
     def __str__(self):
         return str(self.PriorityChoice(self.priority).label)
+    
+    class Meta:
+        ordering = ['priority']
 
 class Idea(models.Model):
 
