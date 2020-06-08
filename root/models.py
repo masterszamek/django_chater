@@ -39,8 +39,8 @@ class Idea(models.Model):
 
 
     author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
-    title = models.CharField(max_length=50, blank=False)
-    text = models.TextField(blank=False)
+    title = models.CharField(max_length=50, blank=False, unique=True)
+    text = models.TextField(blank=False, unique=True)
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE, blank=False)
     send_date = models.DateTimeField(auto_now_add=True)
 
@@ -54,8 +54,8 @@ class Idea(models.Model):
 
 class WhatsNew(models.Model):
     author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
-    title = models.CharField(max_length=50, blank=False)
-    text = models.TextField()
+    title = models.CharField(max_length=50, blank=False, unique=True)
+    text = models.TextField(unique=True)
     send_date = models.DateTimeField(auto_now_add=True)
 
 

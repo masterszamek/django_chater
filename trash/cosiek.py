@@ -1,9 +1,12 @@
-class A:
+from root.serializers import CreateIdeaSerializer
+from django.contrib.auth.models import User
 
-    coomand = {
+user = User.objects.get(username="maciek")
+context={"user":user}
+data={
+    "title":"Aaaa",
+    "text":"Sdsdsd",
+    "priority":1,
+}
 
-        "ala": ala,
-    }
-
-    def ala(self, zzz):
-        print (self, zzz)
+iss = CreateIdeaSerializer(data=data, context=context)
