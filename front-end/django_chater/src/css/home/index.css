@@ -1,0 +1,40 @@
+.grid-system {
+    display: grid;
+    grid-template-columns: 30% auto 30%;
+    grid-template-rows: 100%;
+    grid-template-areas: "left empty right";
+
+}
+
+.left {
+    grid-area: left;
+    background: rgba(255, 255, 255, 0.01);
+
+}
+.left p, .left button{
+    margin-left: 1em;
+
+}
+
+.right {
+    grid-area: right;
+    background: rgba(255, 255, 255, 0.01);
+
+
+}
+.right p{
+    margin-left: 1em;
+
+}
+
+
+
+
+.subheader{
+    background: rgba(255, 255, 255, 0.10);
+    border-top-right-radius: 0.2em;
+    border-bottom-right-radius: 0.2em;
+    font-weight: 300;
+    padding: 0.5em;
+
+}

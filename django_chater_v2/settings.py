@@ -102,8 +102,8 @@ CHANNEL_LAYERS = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=2),
-    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=3),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

@@ -43,9 +43,14 @@ export default class Authentication{
             this.set_user_authenticated(false);
 
     };
+    static logout(){
+        this.set_user_authenticated(false);
+        this.set_access_token(undefined);
+        localStorage.removeItem("refresh_token");
+
+    }
     
-    
-    static get_user_info(){
+    static get_user(){
         return this.#user;
     }
 
@@ -53,7 +58,7 @@ export default class Authentication{
         this.#user.authenticated = authenticated;
 
         this.#subscribers.forEach((func)=>{
-            func(this.get_user_info());
+            func(this.get_user());
         })
     }
     
@@ -61,12 +66,12 @@ export default class Authentication{
         
         const access_token = await this.get_access_token();
   
-        return {Authorization: "Bearer"+" "+access_token};
+        return {Authorization: `Bearer ${access_token}`};
     }
     
     static set_access_token(token){
         let expiry;
-        if(token == undefined)
+        if(token === undefined)
             expiry = 0;
         else
             expiry = new Date( new Date().getTime() + config.access_token_lifetime*1000) ;
@@ -101,18 +106,19 @@ export default class Authentication{
                 "body": JSON.stringify(form_data)
             }    
         );
+        console.log(response);
         if(response.ok){
             const data = await response.json();
             this.set_user_authenticated(true);
             this.set_access_token(data.access);
-            console.error("wykonuje");
+            console.error("zapytanie ok");
 
             return data.access;
         }
         else{
             this.set_access_token(undefined);
             this.set_user_authenticated(false);
-            console.error("wykonuje");
+            console.error("401");
             return undefined;
         }
     };
