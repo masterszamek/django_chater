@@ -1,4 +1,0 @@
-react
-react_bootstrap
-react-router-dom
-

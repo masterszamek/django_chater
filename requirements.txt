@@ -3,4 +3,4 @@ djangorestframework==3.10.2
 djangorestframework-simplejwt==4.4.0
 walrus==0.8.1
 channels==2.4.0
-
+django-cors-headers
