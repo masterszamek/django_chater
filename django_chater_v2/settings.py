@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k0!dt834(gpleew%43+ll-72kv_45pu_9_n9d#3y44t_48a4yt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -138,7 +138,10 @@ LOGOUT_REDIRECT_URL = reverse_lazy("root:index")
 LOGIN_REDIRECT_URL = reverse_lazy("root:index")
 
 
-STATIC_URL = '/static/'
+STATIC_URL = os.path.join(BASE_DIR, "static")
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+#STATIC_URL = "/static/"
+
 STATICFILES_DIRS = [
     ("workspace", os.path.join(BASE_DIR, "static/workspace")),
     ("root", os.path.join(BASE_DIR, "static/root")),
