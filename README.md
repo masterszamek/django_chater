@@ -1,8 +1,14 @@
 ### Django Chater 
 Simple group chat application written in django with trello
 
+![image info](./images/1.png)
+![image info](./images/2.png)
+
+
 ## Online preview
 [Chat server](http://maciex.myddns.me)
+
+
 
 ## Requirements:
 * Python 3.6.X
