@@ -1,20 +1,21 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block head %}
 
 {% endblock %}
 
 {% block header %}
-    <div class="header">
+    <div class="header d-flex justify-content-center">
         {% if next %}
             {% if user.is_authenticated %}
-                <p>Your account doesn't have access to this page. To proceed,
-                    please login with an account that has access.</p>
+                <h3>Your account doesn't have access to this page. To proceed,
+                    please login with an account that has access.</h3>
             {% else %}
-                <p>Please login to see this page.</p>
+                <h3>Please login to see this page.</h3>
             {% endif %}
 
         {% else %}
-            <p> Login site</p>
+            <h3> Login site</h3>
 
         {% endif %}
     </div>
@@ -22,16 +23,17 @@
 
 {% block main %}
 
-    <div class="main">
+    <div class="main d-flex justify-content-center">
 
+        <div class="w-25">
+            <form method="post" action="{% url 'root:login' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
 
-        <form method="post" action="{% url 'root:login' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-
-            <button type="submit" class="btn btn-secondary">Login</button>
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
+                <button type="submit" class="btn btn-secondary">Login</button>
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
     </div>
 
 
