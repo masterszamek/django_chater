@@ -1,23 +1,23 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block head %}
-    <style>
-    .errorlist{ color:lightcoral;}
-    </style>
+
 {% endblock %}
+
 {% block header %}
-    <div class="header">
-        <p> Sign up site</p>
+    <div class="header d-flex justify-content-center">
+        <h3> Sign up site</h3>
     </div>
 
 {% endblock %}
 
 
 {% block main %}
-    <div class="main">
+    <div class="main d-flex justify-content-center">
 
         <form action={% url "root:sign_up" %} method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy}}
             <button type="submit" class="btn btn-secondary">Submit</button>
         </form>
     </div>
