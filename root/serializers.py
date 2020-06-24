@@ -52,7 +52,7 @@ class CreateIdeaSerializer(serializers.ModelSerializer):
 
 
     def create(self, data):
-        user =  self.context['request'].user
+        user = self.context['request'].user
 
         return models.Idea(
             title = data['title'],
