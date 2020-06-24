@@ -139,9 +139,9 @@ LOGOUT_REDIRECT_URL = reverse_lazy("root:index")
 LOGIN_REDIRECT_URL = reverse_lazy("root:index")
 
 
-STATIC_URL = os.path.join(BASE_DIR, "static")
-#STATIC_ROOT = os.path.join(BASE_DIR, "static")
-#STATIC_URL = "/static/"
+STATIC_URL = "/static/"
+
+STATIC_ROOT = "/home/maciek/static/"
 
 STATICFILES_DIRS = [
     ("workspace", os.path.join(BASE_DIR, "static/workspace")),
