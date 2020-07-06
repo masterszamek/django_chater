@@ -16,7 +16,7 @@ def get_sentinel_user():
 def special_match(str, search=re.compile('^[a-zA-Z0-9_ ]+$')):
     """
         True -> string contain correct chars
-        False -> string doesnt contain corret chars
+        False -> string contain incorret chars
     """
     return bool(search.match(str))
 

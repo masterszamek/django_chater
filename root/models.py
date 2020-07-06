@@ -4,66 +4,75 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import RegexValidator
 
-from .models_field_type import IntegerChoices, TextChoices
+
+
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
 
+class IdeaCategory(models.Model):
+    title = models.CharField(verbose_name="Category title", max_length=50, unique=True)
 
-class Priority(models.Model):
-    class PriorityChoice(IntegerChoices):
-        HIGH = 1, _("High task priority")
-        MEDIUM = 2, _("Medium task priority")
-        LOW = 3, _("Low task priority")
-    
-    class Color(TextChoices):
-        HIGH = "#FFB6C1", _("light pink")
-        MEDIUM = "#99EE99", _("light green")
-        LOW = "#20B2D0", _("light blue")
-
-    priority = models.IntegerField(choices=PriorityChoice.choices, default=3, unique=True, blank=False)
-    
-    @property
-    def color(self):
-        return self.Color[self.PriorityChoice(self.priority).name].value
-    
-    @property
-    def title(self):
-        return self.__str__()
-        
     def __str__(self):
-        return str(self.PriorityChoice(self.priority).label)
+        return self.title
     
-    class Meta:
-        ordering = ['priority']
+
+class IdeaTag(models.Model):
+    name = models.CharField(
+        max_length=20, 
+        unique=True,
+        db_index=True,
+        validators=[RegexValidator(regex='^[a-zA-Z0-9_]+$', message="Invalid tag name")],
+    )
+
+    def __str__(self):
+        return self.name
+    
 
 class Idea(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=50, unique=True)
+    text = models.TextField(unique=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    in_progress = models.BooleanField(default=False)
+
+    author = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), related_name="ideas")
+    category = models.ForeignKey(IdeaCategory, related_name="ideas", blank=False, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(IdeaTag, related_name="ideas", blank=True)
+
+    def __str__(self):
+        return "{}: {}".format(self.author, self.title)
     
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
-    title = models.CharField(max_length=50, blank=False, unique=True)
-    text = models.TextField(blank=False, unique=True)
-    priority = models.ForeignKey(Priority, on_delete=models.CASCADE, blank=False)
-    send_date = models.DateTimeField(auto_now_add=True)
-
-
-    def __str__(self):
-        return "{} -> {}".format(self.title, self.text)
 
     class Meta:
-        ordering = ['-send_date']
+        ordering = ['create_date']
 
 
-class WhatsNew(models.Model):
+
+class IdeaComment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    author = models.ForeignKey(User, blank=False, on_delete=models.SET(get_sentinel_user))
-    title = models.CharField(max_length=50, blank=False, unique=True)
-    text = models.TextField(blank=False, unique=True)
-    send_date = models.DateTimeField(auto_now_add=True)
-
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user), related_name="+")
+    text = models.TextField(unique=True)
+    create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "{} -> {}".format(self.title, self.text)
+        return "{}: {}".format(self.author, self.text)
+    
+    class Meta:
+        ordering = ['create_date']
+
+
+class Question(models.Model):
+    author = models.CharField(
+        max_length=30,
+        validators=[RegexValidator(regex='^[a-zA-Z]+$', message="Invalid tag name")],
+        )
+    text = models.TextField(unique=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    answered = models.BooleanField(default=False)
+    
 
     class Meta:
-        ordering = ['-send_date']
+        ordering = ['create_date']
