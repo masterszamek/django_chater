@@ -54,5 +54,7 @@ class CreateUserView(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.CreateUserSerializer
 
 
+class CreateQuestionToAuthor(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    
 
 #list  create retrieve update partial_update destroy

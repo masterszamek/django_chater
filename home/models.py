@@ -64,7 +64,7 @@ class IdeaComment(models.Model):
         ordering = ['create_date']
 
 
-class Question(models.Model):
+class QuestionToCreator(models.Model):
     author = models.CharField(
         max_length=30,
         validators=[RegexValidator(regex='^[a-zA-Z]+$', message="Invalid tag name")],

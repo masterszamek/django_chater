@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 
-from root.urls import api_urlpatterns
+from home.urls import api_urlpatterns
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -25,5 +25,5 @@ urlpatterns = [
     path("api/home/", include((api_urlpatterns, "api"))),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path("", include("root.urls")),
+    path("", include("home.urls")),
 ]

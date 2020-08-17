@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'workspace',
-    'root',
+    'home',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -153,16 +153,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-LOGIN_URL = reverse_lazy('root:login')
-LOGOUT_REDIRECT_URL = reverse_lazy("root:index")
-LOGIN_REDIRECT_URL = reverse_lazy("root:index")
+LOGIN_URL = reverse_lazy('home:login')
+LOGOUT_REDIRECT_URL = reverse_lazy("home:index")
+LOGIN_REDIRECT_URL = reverse_lazy("home:index")
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    ("workspace", os.path.join(BASE_DIR, "static/workspace")),
-    ("root", os.path.join(BASE_DIR, "static/root")),
-    ("css", os.path.join(BASE_DIR, "static/css")),
-    ("modals", os.path.join(BASE_DIR, "static/modals")),
-
-]

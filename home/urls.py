@@ -6,7 +6,7 @@ from rest_framework import routers
 from rest_framework.negotiation import BaseContentNegotiation
 from rest_framework_nested import routers
 
-app_name = "root"
+app_name = "home"
 
 urlpatterns = [
 ]

@@ -87,10 +87,10 @@ class IdeaCommentSerializer(serializers.ModelSerializer):
         model = models.IdeaComment
         fields = '__all__'
 
-class QuestionSerializer(serializers.ModelSerializer):
+class QuestionToCreatorSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.Question
+        model = models.QuestionToCreator
         exclude = ['answered']
 
 
@@ -101,7 +101,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
         user = User(**data)
         try:
-            print("oooooo")
             validate_password(data['password'], user)
         except django_ValidationError as error:
             
