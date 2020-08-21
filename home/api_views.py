@@ -54,7 +54,8 @@ class CreateUserView(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.CreateUserSerializer
 
 
-class CreateQuestionToAuthor(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    
+class CreateQuestionToCreator(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = models.QuestionToCreator.objects.all()
+    serializers_class = serializers.QuestionToCreatorSerializer
 
 #list  create retrieve update partial_update destroy

@@ -3,18 +3,14 @@ from . import api_views
 
 
 from rest_framework import routers
-from rest_framework.negotiation import BaseContentNegotiation
 from rest_framework_nested import routers
 
 app_name = "home"
 
-urlpatterns = [
-]
-
-
 router = routers.SimpleRouter()
 router.register(r'idea_categories', api_views.IdeaCategoryViewSet)
 router.register(r'create_user', api_views.CreateUserView)
+
 ideas_router = routers.NestedSimpleRouter(router, r'idea_categories', lookup="idea_category")
 ideas_router.register(r'ideas', api_views.IdeaViewSet)
 

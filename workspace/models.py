@@ -5,10 +5,13 @@ from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from django.core.validators import RegexValidator
 
 import uuid
 import re
 
+
+from permissions import models as permission_models
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
@@ -42,7 +45,12 @@ class Workspace(models.Model):
     """
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(
+        max_length=30,
+        unique=True,
+        blank=False,
+        validators=[RegexValidator(regex='^[a-zA-Z0-9_]+$', message="Invalid tag name")]
+    )
     users = models.ManyToManyField(User, blank=True)
     public = models.BooleanField(default=False)
     password = models.CharField(blank=True, max_length=50)
@@ -66,7 +74,16 @@ class Workspace(models.Model):
             models.Index(fields=['id']),
         ]
 
+class PermissionUserWorkspaceInstance(permission_models.PermissionUserInstance):
 
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'workspace', 'permission'], name="unique_permission_workspace_user")
+        ]
+
+    
 class Room(models.Model):
     """
             If public field is FALSE user has access room only by invite workspace admin.
@@ -74,9 +91,14 @@ class Room(models.Model):
     """
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=30)
+    name = models.CharField(
+        max_length=30,
+        unique=True,
+        blank=False,
+        validators=[RegexValidator(regex='^[a-zA-Z0-9_]+$', message="Invalid tag name")]
+    )
     users = models.ManyToManyField(User, blank=True)
-    workspace = models.ForeignKey(Workspace, blank=True, on_delete=models.CASCADE)
+    workspace = models.ForeignKey(Workspace, blank=False, on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
     password = models.CharField(blank=True, max_length=50)
     hidden = models.BooleanField(default=True)
@@ -109,6 +131,22 @@ class Room(models.Model):
         ]
         indexes = [
             models.Index(fields=['id']),
+        ]
+
+class PermissionUserRoomInstance(permission_models.PermissionUserInstance):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'room', 'permission'], name="unique_permission_room_user")
+        ]
+
+class LevelPermissionUserRoomInstance(permission_models.PermissionUserInstance):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'room'], name="unique_level_permission_room_user")
         ]
 
 
