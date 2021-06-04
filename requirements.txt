@@ -1,4 +1,4 @@
-django==2.2.12
+django==2.2.21
 walrus==0.8.1
 channels==2.4.0
 django-crispy-forms==1.9.1
