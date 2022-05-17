@@ -17,7 +17,6 @@ Simple group chat application written in django with trello
 
 ### Technologies:
 * django
-* django rest framework (rest-api branch)
 * channels
 * redis
 * JWT (rest-api branch)
@@ -30,11 +29,3 @@ Simple group chat application written in django with trello
 ### Run
 * Run redis-server
 * python3 manage.py runserver
-
-### Goal
-Make better chater than slack
-
-### Future
-I'm currently rewriting that chat using django rest framework and react on client side
-* Rest-api branch -> server side using django rest framework
-* [Client side](https://github.com/masterszamek/django_chater-front_end) -> repository contain client side app
