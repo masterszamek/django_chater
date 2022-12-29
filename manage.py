@@ -22,3 +22,4 @@ if __name__ == '__main__':
 ### brr komentarz
 ### brr 2komentarz
 ### brr 3komentarz
+### brr 4komentarz
